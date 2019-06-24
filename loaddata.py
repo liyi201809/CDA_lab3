@@ -18,6 +18,19 @@ def load_data(path):
     
     return df
 
+
+# Get the host_ip
+def host_ip(df):
+    from collections import Counter
+    #df = df[['src_ip', 'dst_ip']]
+    temp1 = df['src_ip'].tolist()
+    temp2 = df['dst_ip'].tolist()
+    whole_ip = temp1 + temp2
+    host = Counter(whole_ip).most_common(1) # return ip and its counts
+    return host[0][0]
+
+
+
 # Get sequential IP addresses connected to the host_ip
 def load_ip_sequence(df, host_ip):
     
@@ -35,3 +48,4 @@ def load_ip_sequence(df, host_ip):
     df['connected'] = df.apply(filter_ip, axis=1)
     
     return df['connected'].tolist()
+
